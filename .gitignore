@@ -72,6 +72,10 @@ package-lock.json
 .env.development.local
 .env.test.local
 
+// ignore env files inside backend folder
+backend/.env
+backend/.env.local
+
 // ignore fastAPI venv and cache files inside backend folder
 
 backend/venv/
