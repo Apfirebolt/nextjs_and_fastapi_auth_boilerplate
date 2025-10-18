@@ -71,12 +71,10 @@ export const authOptions = {
     async jwt({ token, user }) {
       if (user) {
         // user here is the object returned by the 'authorize' function above
-        console.log('User is ', user)
-        token.id = user.id;
-        token.email = user.email;
-        token.token = user.token;
+        token.id = user.user.id;
+        token.email = user.user.email;
+        token.token = user.user.access_token;
       }
-      console.log("Secret", token);
       return token;
     },
     async session({ session, token }) {

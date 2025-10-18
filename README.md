@@ -69,3 +69,22 @@ Keep secrets out of version control. Use a secrets manager for production.
 ## License
 
 Provided as a permissive starting point. Add a LICENSE file to specify terms.
+
+
+### Steps 
+
+### Install and configure 
+
+Next auth
+
+```
+npm install next-auth
+```
+
+Create an API action to hit this url inside a route handler. API folder inside auth.
+
+Add these functions on the login page.
+
+import { signIn, useSession, signOut } from 'next-auth/react';
+
+Then write the code for auth Provider and pass it as context.

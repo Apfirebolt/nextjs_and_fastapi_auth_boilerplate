@@ -1,8 +1,16 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import { useState } from 'react';
+import { signIn, useSession, signOut } from 'next-auth/react';
 
 export default function Login() {
+
+  const { data: session } = useSession();
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -15,12 +23,30 @@ export default function Login() {
       setError('Please provide both email and password.');
       return;
     }
-  };
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
+    setLoading(true);
+    try {
+      const result = await signIn('credentials', {
+        redirect: false, // keep manual redirect handling in this mock
+        email: emailTrim,
+        password: passwordVal,
+      });
+
+      if (result?.error) {
+        setError(result.error);
+      } else if (result?.ok) {
+        // Successful mock login
+        setError('Login successful! Check the console for simulated redirection to /. The Express API was hit.');
+      } else {
+        setError('An unexpected response was received during authentication.');
+      }
+    } catch (err) {
+      console.error('Network or API call failed:', err);
+      setError('Network error: Could not reach NextAuth endpoint.');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="flex items-center justify-center p-4 bg-secondary font-sans">
@@ -79,6 +105,23 @@ export default function Login() {
             ) : 'Log In'}
           </button>
         </form>
+
+        {session?.user && (
+          <div className="pt-4 mt-4 border-t border-gray-200">
+            <div className="flex items-center justify-between">
+              <div className="text-sm text-gray-700">
+                Signed in as <span className="font-medium">{session.user.email || ''}</span>
+              </div>
+              <button
+                type="button"
+                onClick={() => signOut()}
+                className="ml-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-lg shadow-sm text-white bg-primary hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+              >
+                Log out
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
