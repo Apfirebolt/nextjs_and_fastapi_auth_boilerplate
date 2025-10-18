@@ -79,5 +79,5 @@ backend/.env.local
 // ignore fastAPI venv and cache files inside backend folder
 
 backend/venv/
-backend/__pycache__/
-backend/*.pyc
+backend/**/__pycache__/
+backend/**/*.pyc
