@@ -9,7 +9,7 @@ async def new_user_register(request: schema.BaseModel, database) -> models.User:
     try:
         new_user = models.User(username=request.username, email=request.email,
                                password=request.password,
-                               role='user')                     
+                               role='user')                   
         database.add(new_user)
         database.commit()
         database.refresh(new_user)

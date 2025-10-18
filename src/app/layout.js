@@ -23,13 +23,13 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body>
+      <body className="flex flex-col min-h-screen">
         <Header />
-        <div
-          className={`${geistSans.variable} ${geistMono.variable} font-sans`}
+        <main
+          className={`flex-grow ${geistSans.variable} ${geistMono.variable} font-sans`}
         >
           {children}
-        </div>
+        </main>
         <Footer />
       </body>
     </html>

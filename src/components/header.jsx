@@ -42,7 +42,7 @@ const Header = () => {
               <li key={index}>
                 <Link
                   href={item.link}
-                  className="px-2 py-3 hover:bg-secondary hover:text-accent transition-all duration-300 shadow rounded"
+                  className="px-2 py-3 transition-all duration-300 shadow rounded"
                 >
                   {item.name}
                 </Link>
@@ -69,7 +69,7 @@ const Header = () => {
             <li key={index}>
               <Link
                 href={item.link}
-                className="block px-2 py-3 hover:bg-secondary hover:text-accent transition-all duration-300 shadow rounded"
+                className="block px-2 py-3 transition-all duration-300 shadow rounded"
                 onClick={toggleMenu}
               >
                 {item.name}

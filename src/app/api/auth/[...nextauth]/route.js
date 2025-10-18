@@ -37,7 +37,7 @@ export const authOptions = {
       async authorize(credentials) {
         
         // 1. Make a POST request to your Express backend's login endpoint
-        const expressLoginUrl = process.env.EXPRESS_API_BASE_URL + '/api/auth/login';
+        const expressLoginUrl = process.env.FAST_API_BASE_URL + '/api/auth/login';
 
         try {
           if (!credentials?.email || !credentials?.password) return null;
