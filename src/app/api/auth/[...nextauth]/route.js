@@ -73,7 +73,7 @@ export const authOptions = {
         // user here is the object returned by the 'authorize' function above
         token.id = user.user.id;
         token.email = user.user.email;
-        token.token = user.user.access_token;
+        token.token = user.access_token;
       }
       return token;
     },

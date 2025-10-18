@@ -36,7 +36,7 @@ export default function Login() {
         setError(result.error);
       } else if (result?.ok) {
         // Successful mock login
-        setError('Login successful! Check the console for simulated redirection to /. The Express API was hit.');
+        setError('Login successful!');
       } else {
         setError('An unexpected response was received during authentication.');
       }
@@ -55,7 +55,7 @@ export default function Login() {
           Login
         </h1>
         {error && (
-          <div className="p-3 text-sm font-medium text-red-700 bg-red-100 border border-red-300 rounded-lg">
+          <div className="p-3 text-sm font-medium bg-red-100 border border-red-300 rounded-lg">
             {error}
           </div>
         )}
