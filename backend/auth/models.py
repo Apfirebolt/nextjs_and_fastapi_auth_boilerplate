@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Integer, String
-from backend.db import Base
+from db import Base
 
 from .import hashing
 

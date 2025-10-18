@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 
-from backend.auth import router as auth_router
+from auth import router as auth_router
 
 app = FastAPI(title="Fast Next Auth App",
     docs_url="/docs",
