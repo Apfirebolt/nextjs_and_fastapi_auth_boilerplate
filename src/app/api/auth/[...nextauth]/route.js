@@ -70,19 +70,25 @@ export const authOptions = {
     // 1. Add user data (like user ID) to the JWT
     async jwt({ token, user }) {
       if (user) {
-        // user here is the object returned by the 'authorize' function above
-        console.log('User is ', user)
+        // for local auth
+        if (user.user) {
+          token.id = user.user.id;
+          token.email = user.user.email;
+          token.token = user.access_token;
+          return token;
+        }
+        // for google auth
         token.id = user.id;
         token.email = user.email;
-        token.token = user.token;
       }
-      console.log("Secret", token);
       return token;
     },
     async session({ session, token }) {
       session.user.id = token.id;
       session.user.email = token.email;
-      session.user.token = token.token;
+      if (token.token) {
+        session.user.token = token.token;
+      }
       return session;
     },
   },

@@ -4,6 +4,7 @@ import Link from "next/link";
 import React, { useState, useEffect } from "react";
 import { FaBars } from 'react-icons/fa';
 import { FaTimes } from 'react-icons/fa';
+import { useSession } from 'next-auth/react';
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -11,6 +12,8 @@ const Header = () => {
     { name: 'Login', link: '/login' },
     { name: 'Register', link: '/register' },
   ]);
+
+  const { data: session } = useSession();
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -21,6 +24,20 @@ const Header = () => {
       setIsOpen(false);
     }
   };
+
+  useEffect(() => {
+    if (session?.user) {
+      setMenuItems([
+        { name: 'Profile', link: '/profile' },
+        { name: 'Logout', link: '/api/auth/signout' },
+      ]);
+    } else {
+      setMenuItems([
+        { name: 'Login', link: '/login' },
+        { name: 'Register', link: '/register' },
+      ]);
+    }
+  }, [session]);
 
   useEffect(() => {
     document.addEventListener('click', closeOnClickOutside);
