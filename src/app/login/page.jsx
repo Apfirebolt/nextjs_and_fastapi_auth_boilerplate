@@ -48,6 +48,20 @@ export default function Login() {
     }
   };
 
+  // Google auth function
+  const handleGoogleSignIn = async () => {
+    setError('');
+    setLoading(true);
+    try {
+      const result = await signIn('google', { redirect: false });
+    } catch (err) {
+      console.error('Network or API call failed:', err);
+      setError('Network error: Could not reach NextAuth endpoint.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="flex items-center justify-center p-4 bg-secondary font-sans">
       <div className="w-full max-w-md p-8 space-y-6 bg-white shadow-2xl rounded-xl">
@@ -105,6 +119,22 @@ export default function Login() {
             ) : 'Log In'}
           </button>
         </form>
+
+        <div className="relative my-6">
+          <button
+            disabled
+            className="absolute left-0 top-1/2 transform -translate-y-1/2 w-full border-t border-gray-300"
+          ></button>
+          <span className="relative bg-white px-4 text-sm text-gray-500">Or continue with</span>
+        </div>
+
+        <button
+          onClick={handleGoogleSignIn}
+          disabled={loading}
+          className="w-full flex justify-center items-center py-2 px-4 border border-gray-300 rounded-lg shadow-sm text-lg font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-violet-500 transition duration-150 disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          Sign in with Google
+        </button>
 
         {session?.user && (
           <div className="pt-4 mt-4 border-t border-gray-200">

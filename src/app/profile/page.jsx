@@ -1,21 +1,23 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import { signIn, useSession, signOut } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
+import Loader from '@/components/loader';
 import axios from 'axios';
 
 export default function Profile() {
 
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (status === 'unauthenticated') {
+      router.push('/login');
+    }
+  }, [status, router]);
 
   const [profileData, setProfileData] = useState(null);
-
-  // if session does not exist, redirect to login
-  setTimeout(() => {
-    if (!session?.user) {
-      window.location.href = '/login';
-    }
-  }, 1000);
 
   useEffect(() => {
     
@@ -35,6 +37,10 @@ export default function Profile() {
       fetchProfileData();
     }
   }, [session]);
+
+  if (status === 'loading') {
+    return <Loader />;
+  }
 
   return (
     <div className="flex items-center min-h-screen justify-center p-4 bg-secondary font-sans">
